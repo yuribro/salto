@@ -161,7 +161,7 @@ export const setStateProviderAction: WorkspaceCommandAction<SetStateProviderArgs
   input,
   output,
 }) => {
-  const { provider, bucket, prefix } = input
+  const { provider, bucket, prefix, presignerUrl } = input
   outputLine(`Setting state provider ${provider} for workspace`, output)
   const stateConfig: StateConfig = { provider: provider ?? 'file' }
 
@@ -170,7 +170,7 @@ export const setStateProviderAction: WorkspaceCommandAction<SetStateProviderArgs
       errorOutputLine('Must set bucket name with provider of type s3', output)
       return CliExitCode.UserInputError
     }
-    stateConfig.options = { s3: { bucket, prefix } }
+    stateConfig.options = { s3: { bucket, prefix, presignerUrl } }
   }
   if (provider !== 's3' && bucket !== undefined) {
     errorOutputLine('bucket argument is only valid with provider type s3', output)
@@ -202,7 +202,12 @@ const setStateProviderDef = createWorkspaceCommand({
       {
         name: 'prefix',
         type: 'string',
-        description: 'A prefix inside the bucket where files will be stored',
+        description: 'When provider is S3, a prefix inside the bucket where files will be stored',
+      },
+      {
+        name: 'presignerUrl',
+        type: 'string',
+        description: 'When provider is S3, a URL of a service to generate presigned URLs',
       },
     ],
   },

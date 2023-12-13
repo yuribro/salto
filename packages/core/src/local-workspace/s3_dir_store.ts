@@ -16,7 +16,7 @@
 import path from 'path'
 import { logger } from '@salto-io/logging'
 import * as AWS from '@aws-sdk/client-s3'
-import { createS3Client } from '@salto-io/aws-utils'
+import { createS3Client, PartialS3Client } from '@salto-io/aws-utils'
 import { safeJsonStringify } from '@salto-io/adapter-utils'
 import { dirStore, staticFiles } from '@salto-io/workspace'
 import Bottleneck from 'bottleneck'
@@ -37,7 +37,7 @@ export const buildS3DirectoryStore = (
   }: {
     bucketName: string
     baseDir: string
-    S3Client?: AWS.S3
+    S3Client?: PartialS3Client
     concurrencyLimit?: number
   }
 ): staticFiles.StateStaticFilesStore => {

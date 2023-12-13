@@ -38,3 +38,5 @@ export const createS3Client = (
     { retryDecider }
   ),
 })
+
+export type PartialS3Client = Pick<AWS.S3, 'getObject' | 'putObject' | 'listObjectsV2'>

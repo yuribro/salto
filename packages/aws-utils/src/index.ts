@@ -13,4 +13,4 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-export { createS3Client } from './utils'
+export { createS3Client, PartialS3Client } from './utils'

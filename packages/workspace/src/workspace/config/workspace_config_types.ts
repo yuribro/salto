@@ -31,22 +31,31 @@ export type ProviderOptionsS3 = {
   bucket: string
   prefix?: string
   uploadConcurrencyLimit?: number
+  presignerUrl?: string
 }
 
 export type ProviderOptionsFile = {
   localStorageDir: string
 }
 
+export type ProviderOptionsAuth0 = {
+  clientId: string
+  domain: string
+}
+
 export type ProviderOptions = {
   s3?: ProviderOptionsS3
   file?: ProviderOptionsFile
+  auth0?: ProviderOptionsAuth0
 }
 
 
 export type StateProviders = 'file' | 's3'
+export type StateAuthProviders = 'auth0'
 
 export type StateConfig = {
   provider: StateProviders
+  authProvider?: StateAuthProviders
   options?: ProviderOptions
 }
 

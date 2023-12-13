@@ -107,7 +107,11 @@ export const getStateContentProvider = (
       if (options === undefined || options.bucket === undefined) {
         throw new Error('Missing key "options.s3.bucket" in workspace state configuration')
       }
-      return createS3StateContentProvider({ workspaceId, options })
+      const authOptions = stateConfig.authProvider === 'auth0' ? stateConfig.options?.auth0 : undefined
+      if (options.presignerUrl !== undefined && authOptions === undefined) {
+        throw new Error('Missing authentication options in worksapce state configuration')
+      }
+      return createS3StateContentProvider({ workspaceId, options, authOptions })
     }
     default:
       throw new Error(`Unsupported state provider ${stateConfig.provider}`)
